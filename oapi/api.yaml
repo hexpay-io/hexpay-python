@@ -1313,6 +1313,7 @@ components:
         - amount
         - currency
         - timer
+        - checkoutURL
 
     # =========================================================================
     # Payment sub-objects
