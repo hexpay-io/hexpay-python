@@ -45,6 +45,9 @@ class PaymentResponse:
         currency (str): The denomination currency ticker recorded at creation time. Mirrors the
             `currency` field from the create request. May be a fiat code or a coin ticker.
              Example: USD.
+        checkout_url (str): URL of the HexPay-hosted checkout page for this payment. Redirect the
+            customer to this URL to let them complete the payment.
+             Example: https://payment.hexpay.io/019327c6-2058-7901-b234-56789abcdeff.
         timer (PaymentTimerResponse): Lifecycle timing information for the payment.
         payment_details (PaymentDetails | Unset): Cryptocurrency payment instructions. Populated when the payment
             transitions
@@ -52,9 +55,6 @@ class PaymentResponse:
 
             The customer must send exactly `coinAmount` of `coin` to `address` on the
             TON blockchain.
-        checkout_url (str | Unset): URL of the HexPay-hosted checkout page for this payment. Redirect the
-            customer to this URL to let them complete the payment.
-             Example: https://payment.hexpay.io/019327c6-2058-7901-b234-56789abcdeff.
         order_id (str | Unset): Merchant-defined external order identifier, if provided at creation. Example:
             order-2026-00123.
         description (str | Unset): Payment description Example: Premium subscription — 1 year.
@@ -64,9 +64,9 @@ class PaymentResponse:
     status: PaymentStatus
     amount: str
     currency: str
+    checkout_url: str
     timer: PaymentTimerResponse
     payment_details: PaymentDetails | Unset = UNSET
-    checkout_url: str | Unset = UNSET
     order_id: str | Unset = UNSET
     description: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -83,13 +83,13 @@ class PaymentResponse:
 
         currency = self.currency
 
+        checkout_url = self.checkout_url
+
         timer = self.timer.to_dict()
 
         payment_details: dict[str, Any] | Unset = UNSET
         if not isinstance(self.payment_details, Unset):
             payment_details = self.payment_details.to_dict()
-
-        checkout_url = self.checkout_url
 
         order_id = self.order_id
 
@@ -103,13 +103,12 @@ class PaymentResponse:
                 "status": status,
                 "amount": amount,
                 "currency": currency,
+                "checkoutURL": checkout_url,
                 "timer": timer,
             }
         )
         if payment_details is not UNSET:
             field_dict["paymentDetails"] = payment_details
-        if checkout_url is not UNSET:
-            field_dict["checkoutURL"] = checkout_url
         if order_id is not UNSET:
             field_dict["order_id"] = order_id
         if description is not UNSET:
@@ -131,6 +130,8 @@ class PaymentResponse:
 
         currency = d.pop("currency")
 
+        checkout_url = d.pop("checkoutURL")
+
         timer = PaymentTimerResponse.from_dict(d.pop("timer"))
 
         _payment_details = d.pop("paymentDetails", UNSET)
@@ -139,8 +140,6 @@ class PaymentResponse:
             payment_details = UNSET
         else:
             payment_details = PaymentDetails.from_dict(_payment_details)
-
-        checkout_url = d.pop("checkoutURL", UNSET)
 
         order_id = d.pop("order_id", UNSET)
 
@@ -151,9 +150,9 @@ class PaymentResponse:
             status=status,
             amount=amount,
             currency=currency,
+            checkout_url=checkout_url,
             timer=timer,
             payment_details=payment_details,
-            checkout_url=checkout_url,
             order_id=order_id,
             description=description,
         )
