@@ -1,0 +1,58 @@
+name: Generate SDK
+
+on:
+  push:
+    branches-ignore:
+      - main
+    paths:
+      - 'oapi/**'
+      - 'openapi-python-client.yaml'
+      - 'gen.Dockerfile'
+      - 'Makefile'
+      - '.github/workflows/generate.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: generate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build generator image (cached)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: gen.Dockerfile
+          tags: hexpay-python-sdk-gen:local
+          load: true
+          cache-from: type=gha,scope=gen
+          cache-to: type=gha,scope=gen,mode=max
+
+      - name: Regenerate SDK
+        run: make gen
+
+      - name: Commit changes if any
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+          if [[ -n $(git status --porcelain) ]]; then
+            git add -A
+            git commit -m "chore: regenerate sdk"
+            git push
+          else
+            echo "No changes to commit."
+          fi
