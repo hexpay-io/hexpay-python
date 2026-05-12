@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "hexpay"
-version = "2.0.0"
+version = "0.0.1"
 description = "Official Python SDK for the HexPay Merchant API (TON cryptocurrency payments)."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -31,8 +31,8 @@ dependencies = [
 [project.urls]
 Homepage      = "https://hexpay.io"
 Documentation = "https://docs.hexpay.io"
-Repository    = "https://github.com/hexpay/hexpay-python-sdk"
-Issues        = "https://github.com/hexpay/hexpay-python-sdk/issues"
+Repository    = "https://github.com/hexpay-io/hexpay-python"
+Issues        = "https://github.com/hexpay-io/hexpay-python/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["hexpay"]
