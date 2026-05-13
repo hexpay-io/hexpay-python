@@ -9,14 +9,23 @@ overwritten on the next regeneration.
 
 ## Installation
 
+Latest stable release from PyPI:
+
 ```bash
-pip install "git+https://github.com/hexpay/hexpay-python.git"
+pip install hexpay
 ```
 
-Or pin to a release tag:
+Pin to a specific version (recommended for production — see [Releases](https://github.com/hexpay-io/hexpay-python/releases) for available tags):
 
 ```bash
-pip install "git+https://github.com/hexpay/hexpay-python.git@v0.0.1"
+pip install "hexpay==X.Y.Z"
+```
+
+Or install straight from the repo — `main` for the latest commit, or any tag:
+
+```bash
+pip install "git+https://github.com/hexpay-io/hexpay-python.git@main"
+pip install "git+https://github.com/hexpay-io/hexpay-python.git@vX.Y.Z"
 ```
 
 ## Quickstart
@@ -127,9 +136,3 @@ Dockerfile.
 CI ([`.github/workflows/generate.yml`](.github/workflows/generate.yml)) runs the
 same `make gen` on every push to a non-`main` branch and commits the regenerated
 client back to the branch.
-
-## Compatibility
-
-- Python ≥ 3.9
-- httpx ≥ 0.23, < 0.29
-- Type hints throughout (`py.typed`)
