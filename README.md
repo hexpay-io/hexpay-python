@@ -60,7 +60,7 @@ from environment variables, a secrets manager, or your config layer.
 
 ## Idempotency
 
-Every `POST` request requires a UUID v4 `X-Idempotency-Key`. The SDK exposes it as
+`POST` requests accept an optional `X-Idempotency-Key` (UUID). The SDK exposes it as
 the `x_idempotency_key` argument on every mutating operation.
 
 **Reuse the same key when retrying** a failed request — the server returns the

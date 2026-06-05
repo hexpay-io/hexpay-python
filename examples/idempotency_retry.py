@@ -1,6 +1,6 @@
 """Safe retry loop preserving the `X-Idempotency-Key`.
 
-The HexPay API requires a UUID v4 `X-Idempotency-Key` on every POST. The
+The HexPay API accepts an optional `X-Idempotency-Key` (UUID) on POST requests. The
 server caches the response for that key for 24 hours, so repeating a request
 with the SAME key returns the cached result instead of creating a duplicate
 payment.
