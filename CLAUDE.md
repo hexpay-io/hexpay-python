@@ -74,8 +74,8 @@ config), update the `paths:` block too.
 
 ## Idempotency contract (relevant for examples and any retry logic)
 
-Every POST in this API requires a UUID v4 `X-Idempotency-Key`. The SDK
-exposes it as `x_idempotency_key=`. Two rules:
+`X-Idempotency-Key` is **optional** on all POST endpoints. The value is a UUID
+(any version). The SDK exposes it as `x_idempotency_key=`. Two rules:
 
 1. **One key per logical operation** — generate it with `str(uuid.uuid4())`.
 2. **Reuse the same key across retries** for that operation. A fresh UUID

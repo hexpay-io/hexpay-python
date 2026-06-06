@@ -15,6 +15,7 @@ from uuid import UUID
 
 if TYPE_CHECKING:
     from ..models.payment_details import PaymentDetails
+    from ..models.payment_response_metadata import PaymentResponseMetadata
     from ..models.payment_timer_response import PaymentTimerResponse
 
 
@@ -23,7 +24,7 @@ T = TypeVar("T", bound="PaymentResponse")
 
 @_attrs_define
 class PaymentResponse:
-    """Full payment object. Returned by the create, retrieve, list, and cancel endpoints.
+    """Full payment object. Returned by the create, retrieve, and list endpoints.
 
     Attributes:
         id (UUID): Unique payment identifier. Example: 019327c6-2058-7901-b234-56789abcdeff.
@@ -58,6 +59,9 @@ class PaymentResponse:
         order_id (str | Unset): Merchant-defined external order identifier, if provided at creation. Example:
             order-2026-00123.
         description (str | Unset): Payment description Example: Premium subscription — 1 year.
+        metadata (PaymentResponseMetadata | Unset): Arbitrary key-value pairs provided at creation time, if any.
+            Included in payment objects and completed-payment webhook payloads.
+             Example: {'customer_id': 'cust_abc123', 'plan': 'premium'}.
     """
 
     id: UUID
@@ -69,10 +73,12 @@ class PaymentResponse:
     payment_details: PaymentDetails | Unset = UNSET
     order_id: str | Unset = UNSET
     description: str | Unset = UNSET
+    metadata: PaymentResponseMetadata | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         from ..models.payment_details import PaymentDetails
+        from ..models.payment_response_metadata import PaymentResponseMetadata
         from ..models.payment_timer_response import PaymentTimerResponse
 
         id = str(self.id)
@@ -95,6 +101,10 @@ class PaymentResponse:
 
         description = self.description
 
+        metadata: dict[str, Any] | Unset = UNSET
+        if not isinstance(self.metadata, Unset):
+            metadata = self.metadata.to_dict()
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -113,12 +123,15 @@ class PaymentResponse:
             field_dict["order_id"] = order_id
         if description is not UNSET:
             field_dict["description"] = description
+        if metadata is not UNSET:
+            field_dict["metadata"] = metadata
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.payment_details import PaymentDetails
+        from ..models.payment_response_metadata import PaymentResponseMetadata
         from ..models.payment_timer_response import PaymentTimerResponse
 
         d = dict(src_dict)
@@ -145,6 +158,13 @@ class PaymentResponse:
 
         description = d.pop("description", UNSET)
 
+        _metadata = d.pop("metadata", UNSET)
+        metadata: PaymentResponseMetadata | Unset
+        if isinstance(_metadata, Unset):
+            metadata = UNSET
+        else:
+            metadata = PaymentResponseMetadata.from_dict(_metadata)
+
         payment_response = cls(
             id=id,
             status=status,
@@ -155,6 +175,7 @@ class PaymentResponse:
             payment_details=payment_details,
             order_id=order_id,
             description=description,
+            metadata=metadata,
         )
 
         payment_response.additional_properties = d

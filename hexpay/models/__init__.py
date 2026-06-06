@@ -19,6 +19,7 @@ from .payment_method_list_response import PaymentMethodListResponse
 from .payment_method_response import PaymentMethodResponse
 from .payment_options import PaymentOptions
 from .payment_response import PaymentResponse
+from .payment_response_metadata import PaymentResponseMetadata
 from .payment_status import PaymentStatus
 from .payment_status_response import PaymentStatusResponse
 from .payment_timer_response import PaymentTimerResponse
@@ -43,6 +44,7 @@ __all__ = (
     "PaymentMethodResponse",
     "PaymentOptions",
     "PaymentResponse",
+    "PaymentResponseMetadata",
     "PaymentStatus",
     "PaymentStatusResponse",
     "PaymentTimerResponse",

@@ -61,11 +61,11 @@ class CreatePaymentRequest:
                  Example: Premium subscription — 1 year.
             metadata (CreatePaymentRequestMetadata | Unset): Arbitrary key-value pairs for merchant use. All values must be
                 strings.
-                Returned on all payment objects and included in webhook payloads.
+                Returned on all payment objects and included in completed-payment webhook payloads.
                 Maximum 10 keys; key names up to 64 characters, values up to 512 characters.
                  Example: {'customer_id': 'cust_abc123', 'customer_email': 'customer@example.com'}.
-            webhook_url (str | Unset): HTTPS URL to which HexPay will POST webhook notifications for this
-                payment's lifecycle events (e.g., transitions to `pending` or `completed`).
+            webhook_url (str | Unset): HTTPS URL to which HexPay will POST a webhook notification when this
+                payment reaches `completed` status.
 
                 Requirements:
                 - Must use HTTPS. Plain HTTP URLs are rejected.
