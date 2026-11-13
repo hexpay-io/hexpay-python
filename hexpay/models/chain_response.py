@@ -21,7 +21,7 @@ class ChainResponse:
     Attributes:
         name (str): Human-readable name of the blockchain network. Example: TON.
         symbol (ChainResponseSymbol): Ticker symbol. Use this value as the `chain` field in
-            `payment_options.methods` when creating payments.
+            `paymentOptions.methods` when creating payments.
              Example: TON.
         img_url (str): URL of the chain logo image. Example: https://assets.hexpay.io/chains/ton.svg.
     """

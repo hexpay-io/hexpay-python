@@ -21,7 +21,7 @@ class CoinResponse:
     Attributes:
         name (str): Human-readable name of the cryptocurrency. Example: Tether.
         symbol (CoinResponseSymbol): Ticker symbol. Use this value as the `coin` field in
-            `payment_options.methods` when creating payments.
+            `paymentOptions.methods` when creating payments.
              Example: USDT.
         img_url (str): URL of the coin logo image. Example: https://assets.hexpay.io/coins/usdt.svg.
     """

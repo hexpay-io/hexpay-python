@@ -100,7 +100,7 @@ reviewing retry code, double-check this.
   status / headers — needed for inspecting error envelopes and
   `Retry-After`.
 - **Inline enums** in the spec become classes named after the parent
-  schema + field (e.g. `MethodFilterCoin.USDT`, `MethodFilterChain.TON`).
+  schema + field (e.g. `MethodRestrictionCoin.USDT`, `MethodRestrictionChain.TON`).
   If you rename a schema in the spec, the generated enum name moves with
   it — update examples accordingly.
 

@@ -105,19 +105,20 @@ def sync_detailed(
     ---
 
     ### Preselected
-    Pass `payment_options.methods` with **exactly one entry** containing **both** `coin`
-    and `chain`. The server resolves the address immediately and returns the payment in
-    `pending` status with `paymentDetails` populated. The customer proceeds straight to
-    the deposit screen without any method selection step.
+    Pass `paymentOptions.methods` with **exactly one entry** containing **both** `coin`
+    and `chain`. HexPay selects this method on behalf of the customer, resolves the
+    address immediately and returns the payment in `pending` status with
+    `paymentDetails` populated. The customer proceeds straight to the deposit screen
+    without any method selection step.
 
     ### Customer Choice
-    Omit `payment_options`. All store-enabled payment methods are offered to the customer
+    Omit `paymentOptions`. All store-enabled payment methods are offered to the customer
     at checkout. The payment starts in `created` status.
 
     ---
 
     ### Supported combinations
-    | `currency` | `payment_options.methods`          | Initial status | `paymentDetails` |
+    | `currency` | `paymentOptions.methods`           | Initial status | `paymentDetails` |
     |------------|------------------------------------|----------------|------------------|
     | `USD`      | *(omitted)*                        | `created`      | absent           |
     | `TON`      | *(omitted)*                        | `created`      | absent           |
@@ -130,8 +131,8 @@ def sync_detailed(
         body (CreatePaymentRequest): Request body for creating a new payment. The body is
             intentionally flat:
             `amount`, `currency`, and all optional fields are top-level. The only nested
-            structure is `payment_options.methods`, which describes an allowlist of
-            acceptable payment methods.
+            structure is `paymentOptions.methods`, which restricts the payment methods
+            offered to the customer.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -170,19 +171,20 @@ def sync(
     ---
 
     ### Preselected
-    Pass `payment_options.methods` with **exactly one entry** containing **both** `coin`
-    and `chain`. The server resolves the address immediately and returns the payment in
-    `pending` status with `paymentDetails` populated. The customer proceeds straight to
-    the deposit screen without any method selection step.
+    Pass `paymentOptions.methods` with **exactly one entry** containing **both** `coin`
+    and `chain`. HexPay selects this method on behalf of the customer, resolves the
+    address immediately and returns the payment in `pending` status with
+    `paymentDetails` populated. The customer proceeds straight to the deposit screen
+    without any method selection step.
 
     ### Customer Choice
-    Omit `payment_options`. All store-enabled payment methods are offered to the customer
+    Omit `paymentOptions`. All store-enabled payment methods are offered to the customer
     at checkout. The payment starts in `created` status.
 
     ---
 
     ### Supported combinations
-    | `currency` | `payment_options.methods`          | Initial status | `paymentDetails` |
+    | `currency` | `paymentOptions.methods`           | Initial status | `paymentDetails` |
     |------------|------------------------------------|----------------|------------------|
     | `USD`      | *(omitted)*                        | `created`      | absent           |
     | `TON`      | *(omitted)*                        | `created`      | absent           |
@@ -195,8 +197,8 @@ def sync(
         body (CreatePaymentRequest): Request body for creating a new payment. The body is
             intentionally flat:
             `amount`, `currency`, and all optional fields are top-level. The only nested
-            structure is `payment_options.methods`, which describes an allowlist of
-            acceptable payment methods.
+            structure is `paymentOptions.methods`, which restricts the payment methods
+            offered to the customer.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -230,19 +232,20 @@ async def asyncio_detailed(
     ---
 
     ### Preselected
-    Pass `payment_options.methods` with **exactly one entry** containing **both** `coin`
-    and `chain`. The server resolves the address immediately and returns the payment in
-    `pending` status with `paymentDetails` populated. The customer proceeds straight to
-    the deposit screen without any method selection step.
+    Pass `paymentOptions.methods` with **exactly one entry** containing **both** `coin`
+    and `chain`. HexPay selects this method on behalf of the customer, resolves the
+    address immediately and returns the payment in `pending` status with
+    `paymentDetails` populated. The customer proceeds straight to the deposit screen
+    without any method selection step.
 
     ### Customer Choice
-    Omit `payment_options`. All store-enabled payment methods are offered to the customer
+    Omit `paymentOptions`. All store-enabled payment methods are offered to the customer
     at checkout. The payment starts in `created` status.
 
     ---
 
     ### Supported combinations
-    | `currency` | `payment_options.methods`          | Initial status | `paymentDetails` |
+    | `currency` | `paymentOptions.methods`           | Initial status | `paymentDetails` |
     |------------|------------------------------------|----------------|------------------|
     | `USD`      | *(omitted)*                        | `created`      | absent           |
     | `TON`      | *(omitted)*                        | `created`      | absent           |
@@ -255,8 +258,8 @@ async def asyncio_detailed(
         body (CreatePaymentRequest): Request body for creating a new payment. The body is
             intentionally flat:
             `amount`, `currency`, and all optional fields are top-level. The only nested
-            structure is `payment_options.methods`, which describes an allowlist of
-            acceptable payment methods.
+            structure is `paymentOptions.methods`, which restricts the payment methods
+            offered to the customer.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -293,19 +296,20 @@ async def asyncio(
     ---
 
     ### Preselected
-    Pass `payment_options.methods` with **exactly one entry** containing **both** `coin`
-    and `chain`. The server resolves the address immediately and returns the payment in
-    `pending` status with `paymentDetails` populated. The customer proceeds straight to
-    the deposit screen without any method selection step.
+    Pass `paymentOptions.methods` with **exactly one entry** containing **both** `coin`
+    and `chain`. HexPay selects this method on behalf of the customer, resolves the
+    address immediately and returns the payment in `pending` status with
+    `paymentDetails` populated. The customer proceeds straight to the deposit screen
+    without any method selection step.
 
     ### Customer Choice
-    Omit `payment_options`. All store-enabled payment methods are offered to the customer
+    Omit `paymentOptions`. All store-enabled payment methods are offered to the customer
     at checkout. The payment starts in `created` status.
 
     ---
 
     ### Supported combinations
-    | `currency` | `payment_options.methods`          | Initial status | `paymentDetails` |
+    | `currency` | `paymentOptions.methods`           | Initial status | `paymentDetails` |
     |------------|------------------------------------|----------------|------------------|
     | `USD`      | *(omitted)*                        | `created`      | absent           |
     | `TON`      | *(omitted)*                        | `created`      | absent           |
@@ -318,8 +322,8 @@ async def asyncio(
         body (CreatePaymentRequest): Request body for creating a new payment. The body is
             intentionally flat:
             `amount`, `currency`, and all optional fields are top-level. The only nested
-            structure is `payment_options.methods`, which describes an allowlist of
-            acceptable payment methods.
+            structure is `paymentOptions.methods`, which restricts the payment methods
+            offered to the customer.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

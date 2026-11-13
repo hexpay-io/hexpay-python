@@ -12,7 +12,7 @@ from ..types import UNSET, Unset
 from typing import cast
 
 if TYPE_CHECKING:
-    from ..models.method_filter import MethodFilter
+    from ..models.method_restriction import MethodRestriction
 
 
 T = TypeVar("T", bound="PaymentOptions")
@@ -20,24 +20,27 @@ T = TypeVar("T", bound="PaymentOptions")
 
 @_attrs_define
 class PaymentOptions:
-    """Optional constraints on which payment methods are available at checkout.
+    """Optional restriction on which payment methods are offered at checkout.
     When omitted entirely, all payment methods enabled for your store are shown
     and the payment is created in `created` status.
 
         Attributes:
-            methods (list[MethodFilter] | Unset): Exactly one method filter specifying both `coin` and `chain`.
-                When provided, the payment is created directly in `pending` status with
-                `paymentDetails` populated (Preselected).
+            methods (list[MethodRestriction] | Unset): Payment methods the customer is allowed to pay with.
 
-                Omit this field entirely to let the customer select a payment method
+                Currently exactly one entry with both `coin` and `chain` is supported.
+                HexPay then selects this method on behalf of the customer: the payment is
+                created directly in `pending` status with `paymentDetails` populated
+                (Preselected). Allowing several methods is planned.
+
+                Omit `paymentOptions` entirely to let the customer select a payment method
                 at checkout — payment starts in `created` status (Customer Choice).
     """
 
-    methods: list[MethodFilter] | Unset = UNSET
+    methods: list[MethodRestriction] | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.method_filter import MethodFilter
+        from ..models.method_restriction import MethodRestriction
 
         methods: list[dict[str, Any]] | Unset = UNSET
         if not isinstance(self.methods, Unset):
@@ -56,15 +59,15 @@ class PaymentOptions:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.method_filter import MethodFilter
+        from ..models.method_restriction import MethodRestriction
 
         d = dict(src_dict)
         _methods = d.pop("methods", UNSET)
-        methods: list[MethodFilter] | Unset = UNSET
+        methods: list[MethodRestriction] | Unset = UNSET
         if _methods is not UNSET:
             methods = []
             for methods_item_data in _methods:
-                methods_item = MethodFilter.from_dict(methods_item_data)
+                methods_item = MethodRestriction.from_dict(methods_item_data)
 
                 methods.append(methods_item)
 

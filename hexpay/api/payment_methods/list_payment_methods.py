@@ -64,11 +64,15 @@ def sync_detailed(
 ) -> Response[ErrorResponse | PaymentMethodListResponse]:
     """List payment methods
 
-     Retrieves all payment methods enabled for your store. Each entry represents
-    a unique coin + chain combination that your store accepts.
+     Retrieves the payment methods enabled for your store. Each entry represents
+    a unique coin + chain combination that your store accepts. Use it, for example,
+    to show available payment options on your website.
+
+    Only your store's enabled methods are returned, not every coin supported by
+    HexPay.
 
     Use `coin.symbol` and `chain.symbol` values from this response as inputs for
-    the `coin` and `chain` fields in `payment_options.methods` when creating a payment.
+    the `coin` and `chain` fields in `paymentOptions.methods` when creating a payment.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -93,11 +97,15 @@ def sync(
 ) -> ErrorResponse | PaymentMethodListResponse | None:
     """List payment methods
 
-     Retrieves all payment methods enabled for your store. Each entry represents
-    a unique coin + chain combination that your store accepts.
+     Retrieves the payment methods enabled for your store. Each entry represents
+    a unique coin + chain combination that your store accepts. Use it, for example,
+    to show available payment options on your website.
+
+    Only your store's enabled methods are returned, not every coin supported by
+    HexPay.
 
     Use `coin.symbol` and `chain.symbol` values from this response as inputs for
-    the `coin` and `chain` fields in `payment_options.methods` when creating a payment.
+    the `coin` and `chain` fields in `paymentOptions.methods` when creating a payment.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -118,11 +126,15 @@ async def asyncio_detailed(
 ) -> Response[ErrorResponse | PaymentMethodListResponse]:
     """List payment methods
 
-     Retrieves all payment methods enabled for your store. Each entry represents
-    a unique coin + chain combination that your store accepts.
+     Retrieves the payment methods enabled for your store. Each entry represents
+    a unique coin + chain combination that your store accepts. Use it, for example,
+    to show available payment options on your website.
+
+    Only your store's enabled methods are returned, not every coin supported by
+    HexPay.
 
     Use `coin.symbol` and `chain.symbol` values from this response as inputs for
-    the `coin` and `chain` fields in `payment_options.methods` when creating a payment.
+    the `coin` and `chain` fields in `paymentOptions.methods` when creating a payment.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -145,11 +157,15 @@ async def asyncio(
 ) -> ErrorResponse | PaymentMethodListResponse | None:
     """List payment methods
 
-     Retrieves all payment methods enabled for your store. Each entry represents
-    a unique coin + chain combination that your store accepts.
+     Retrieves the payment methods enabled for your store. Each entry represents
+    a unique coin + chain combination that your store accepts. Use it, for example,
+    to show available payment options on your website.
+
+    Only your store's enabled methods are returned, not every coin supported by
+    HexPay.
 
     Use `coin.symbol` and `chain.symbol` values from this response as inputs for
-    the `coin` and `chain` fields in `payment_options.methods` when creating a payment.
+    the `coin` and `chain` fields in `paymentOptions.methods` when creating a payment.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

@@ -15,8 +15,9 @@ T = TypeVar("T", bound="CreatePaymentRequestMetadata")
 @_attrs_define
 class CreatePaymentRequestMetadata:
     """Arbitrary key-value pairs for merchant use. All values must be strings.
-    Returned on all payment objects and included in completed-payment webhook payloads.
+    Returned on all payment objects and included in the webhook payload.
     Maximum 10 keys; key names up to 64 characters, values up to 512 characters.
+    Keys are stored as provided and are not renamed.
 
         Example:
             {'customer_id': 'cust_abc123', 'customer_email': 'customer@example.com'}

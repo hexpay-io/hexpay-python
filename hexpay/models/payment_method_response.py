@@ -23,7 +23,7 @@ T = TypeVar("T", bound="PaymentMethodResponse")
 class PaymentMethodResponse:
     """A single payment method — a coin + chain combination accepted by the store.
     The `coin.symbol` / `chain.symbol` pair uniquely identifies the method for
-    use in `payment_options.methods` filters.
+    use in `paymentOptions.methods`.
 
         Attributes:
             id (UUID): Unique identifier for this payment method configuration. Example:

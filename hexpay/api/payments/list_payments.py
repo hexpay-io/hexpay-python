@@ -108,8 +108,7 @@ def sync_detailed(
 
     Args:
         limit (int | Unset):  Default: 10. Example: 20.
-        cursor (str | Unset):  Example:
-            eyJpZCI6IjAxOTMyN2M2LTIwNTgtNzkwMS1iMjM0LTU2Nzg5YWJjZGVmZiJ9.
+        cursor (str | Unset):  Example: 019327c6-1234-7901-b234-56789abcde00.
         status (list[PaymentStatus] | Unset):  Example: ['pending', 'completed'].
 
     Raises:
@@ -153,8 +152,7 @@ def sync(
 
     Args:
         limit (int | Unset):  Default: 10. Example: 20.
-        cursor (str | Unset):  Example:
-            eyJpZCI6IjAxOTMyN2M2LTIwNTgtNzkwMS1iMjM0LTU2Nzg5YWJjZGVmZiJ9.
+        cursor (str | Unset):  Example: 019327c6-1234-7901-b234-56789abcde00.
         status (list[PaymentStatus] | Unset):  Example: ['pending', 'completed'].
 
     Raises:
@@ -193,8 +191,7 @@ async def asyncio_detailed(
 
     Args:
         limit (int | Unset):  Default: 10. Example: 20.
-        cursor (str | Unset):  Example:
-            eyJpZCI6IjAxOTMyN2M2LTIwNTgtNzkwMS1iMjM0LTU2Nzg5YWJjZGVmZiJ9.
+        cursor (str | Unset):  Example: 019327c6-1234-7901-b234-56789abcde00.
         status (list[PaymentStatus] | Unset):  Example: ['pending', 'completed'].
 
     Raises:
@@ -236,8 +233,7 @@ async def asyncio(
 
     Args:
         limit (int | Unset):  Default: 10. Example: 20.
-        cursor (str | Unset):  Example:
-            eyJpZCI6IjAxOTMyN2M2LTIwNTgtNzkwMS1iMjM0LTU2Nzg5YWJjZGVmZiJ9.
+        cursor (str | Unset):  Example: 019327c6-1234-7901-b234-56789abcde00.
         status (list[PaymentStatus] | Unset):  Example: ['pending', 'completed'].
 
     Raises:

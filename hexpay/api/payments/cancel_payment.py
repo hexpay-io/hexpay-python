@@ -88,7 +88,8 @@ def sync_detailed(
 ) -> Response[ErrorResponse | PaymentCancelResponse]:
     """Cancel a payment
 
-     Cancels a payment and returns the updated status `cancelled`.
+     Cancels a payment. The response contains only the new status, `cancelled`.
+    Use `GET /v1/payments/{paymentId}` if you need the full payment object.
 
     Cancellation is permitted from `created` or `pending` status only. Payments
     already in a terminal state (`completed`, `expired`, or `cancelled`) cannot
@@ -126,7 +127,8 @@ def sync(
 ) -> ErrorResponse | PaymentCancelResponse | None:
     """Cancel a payment
 
-     Cancels a payment and returns the updated status `cancelled`.
+     Cancels a payment. The response contains only the new status, `cancelled`.
+    Use `GET /v1/payments/{paymentId}` if you need the full payment object.
 
     Cancellation is permitted from `created` or `pending` status only. Payments
     already in a terminal state (`completed`, `expired`, or `cancelled`) cannot
@@ -159,7 +161,8 @@ async def asyncio_detailed(
 ) -> Response[ErrorResponse | PaymentCancelResponse]:
     """Cancel a payment
 
-     Cancels a payment and returns the updated status `cancelled`.
+     Cancels a payment. The response contains only the new status, `cancelled`.
+    Use `GET /v1/payments/{paymentId}` if you need the full payment object.
 
     Cancellation is permitted from `created` or `pending` status only. Payments
     already in a terminal state (`completed`, `expired`, or `cancelled`) cannot
@@ -195,7 +198,8 @@ async def asyncio(
 ) -> ErrorResponse | PaymentCancelResponse | None:
     """Cancel a payment
 
-     Cancels a payment and returns the updated status `cancelled`.
+     Cancels a payment. The response contains only the new status, `cancelled`.
+    Use `GET /v1/payments/{paymentId}` if you need the full payment object.
 
     Cancellation is permitted from `created` or `pending` status only. Payments
     already in a terminal state (`completed`, `expired`, or `cancelled`) cannot

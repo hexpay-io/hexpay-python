@@ -23,26 +23,26 @@ T = TypeVar("T", bound="CreatePaymentRequest")
 class CreatePaymentRequest:
     """Request body for creating a new payment. The body is intentionally flat:
     `amount`, `currency`, and all optional fields are top-level. The only nested
-    structure is `payment_options.methods`, which describes an allowlist of
-    acceptable payment methods.
+    structure is `paymentOptions.methods`, which restricts the payment methods
+    offered to the customer.
 
         Attributes:
-            amount (str): The payment value as a positive decimal string. No leading zeros are
-                permitted on the integer part (`"007"` is invalid; use `"7"`).
+            amount (str): The payment value as a positive decimal string. Zero is not allowed.
+                No leading zeros are permitted on the integer part (`"007"` is invalid; use `"7"`).
                 For fiat currencies up to 2 decimal places are recommended.
                 For crypto tickers precision depends on the coin.
                  Example: 100.00.
-            currency (str): Ticker symbol for the denomination. Accepts fiat codes (e.g. `USD`, `EUR`,
-                `RUB`) or TON-ecosystem coin tickers (e.g. `TON`, `USDT`).
+            currency (str): Ticker symbol for the denomination. Accepts fiat codes (`USD`, `EUR`, `RUB`)
+                or TON-ecosystem coin tickers (`TON`, `USDT`, `NOT`, `DOGS`, `BUILD`, `BLUM`,
+                `DUST`, `DYOR`, `STON`, `XAUt0`).
 
                 This field defines the **unit of value** — it does not determine the coin
-                the customer pays with. Payment coin is controlled by `payment_options.methods`.
+                the customer pays with. Payment coin is controlled by `paymentOptions.methods`.
 
-                For the full list of accepted values use `GET /v1/payment-methods` (coins)
-                or refer to the supported fiat codes in your store settings.
+                Any supported ticker is accepted, regardless of which payment methods are
+                enabled for your store.
                  Example: USD.
-            payment_options (PaymentOptions | Unset): Optional constraints on which payment methods are available at
-                checkout.
+            payment_options (PaymentOptions | Unset): Optional restriction on which payment methods are offered at checkout.
                 When omitted entirely, all payment methods enabled for your store are shown
                 and the payment is created in `created` status.
             ttl (int | Unset): Time-to-live in seconds. Defines how long the payment remains active
@@ -54,27 +54,37 @@ class CreatePaymentRequest:
                  Default: 3600. Example: 3600.
             order_id (str | Unset): Merchant-defined external order identifier. Use this to correlate a HexPay
                 payment with your internal order or invoice system. Returned on all payment
-                objects and included in webhook payloads.
+                objects and included in the webhook payload.
                  Example: order-2026-00123.
             description (str | Unset): Human-readable description of the payment purpose. May be displayed to
                 the customer on the payment page.
                  Example: Premium subscription — 1 year.
             metadata (CreatePaymentRequestMetadata | Unset): Arbitrary key-value pairs for merchant use. All values must be
                 strings.
-                Returned on all payment objects and included in completed-payment webhook payloads.
+                Returned on all payment objects and included in the webhook payload.
                 Maximum 10 keys; key names up to 64 characters, values up to 512 characters.
+                Keys are stored as provided and are not renamed.
                  Example: {'customer_id': 'cust_abc123', 'customer_email': 'customer@example.com'}.
             webhook_url (str | Unset): HTTPS URL to which HexPay will POST a webhook notification when this
-                payment reaches `completed` status.
+                payment reaches `completed` status. No webhooks are sent for other statuses.
 
                 Requirements:
                 - Must use HTTPS. Plain HTTP URLs are rejected.
-                - Must be publicly reachable from the internet. Loopback addresses
-                  (`localhost`, `127.x.x.x`) and private network ranges (`10.x.x.x`,
-                  `192.168.x.x`, `172.16–31.x.x`) are not allowed.
+                - Must be publicly reachable from the internet. Non-public addresses are
+                  rejected, and host names that resolve to them are blocked at delivery time.
                 - Make sure your server is configured to accept POST requests at this URL
                   before creating payments.
                  Example: https://merchant.com/webhooks/hexpay.
+            redirect_url (str | Unset): HTTPS URL of your page (e.g. the order page) that the checkout page links to
+                once the payment is finished (`completed`, `expired` or `cancelled`), so the
+                customer can return to your store.
+
+                Requirements:
+                - Must be an absolute HTTPS URL. Plain HTTP and other schemes are rejected.
+                - Maximum 512 characters.
+
+                If omitted, the checkout page uses the default HexPay URL.
+                 Example: https://merchant.com/orders/order-2026-00123.
     """
 
     amount: str
@@ -85,6 +95,7 @@ class CreatePaymentRequest:
     description: str | Unset = UNSET
     metadata: CreatePaymentRequestMetadata | Unset = UNSET
     webhook_url: str | Unset = UNSET
+    redirect_url: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -111,6 +122,8 @@ class CreatePaymentRequest:
 
         webhook_url = self.webhook_url
 
+        redirect_url = self.redirect_url
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -120,17 +133,19 @@ class CreatePaymentRequest:
             }
         )
         if payment_options is not UNSET:
-            field_dict["payment_options"] = payment_options
+            field_dict["paymentOptions"] = payment_options
         if ttl is not UNSET:
             field_dict["ttl"] = ttl
         if order_id is not UNSET:
-            field_dict["order_id"] = order_id
+            field_dict["orderId"] = order_id
         if description is not UNSET:
             field_dict["description"] = description
         if metadata is not UNSET:
             field_dict["metadata"] = metadata
         if webhook_url is not UNSET:
-            field_dict["webhookURL"] = webhook_url
+            field_dict["webhookUrl"] = webhook_url
+        if redirect_url is not UNSET:
+            field_dict["redirectUrl"] = redirect_url
 
         return field_dict
 
@@ -144,7 +159,7 @@ class CreatePaymentRequest:
 
         currency = d.pop("currency")
 
-        _payment_options = d.pop("payment_options", UNSET)
+        _payment_options = d.pop("paymentOptions", UNSET)
         payment_options: PaymentOptions | Unset
         if isinstance(_payment_options, Unset):
             payment_options = UNSET
@@ -153,7 +168,7 @@ class CreatePaymentRequest:
 
         ttl = d.pop("ttl", UNSET)
 
-        order_id = d.pop("order_id", UNSET)
+        order_id = d.pop("orderId", UNSET)
 
         description = d.pop("description", UNSET)
 
@@ -164,7 +179,9 @@ class CreatePaymentRequest:
         else:
             metadata = CreatePaymentRequestMetadata.from_dict(_metadata)
 
-        webhook_url = d.pop("webhookURL", UNSET)
+        webhook_url = d.pop("webhookUrl", UNSET)
+
+        redirect_url = d.pop("redirectUrl", UNSET)
 
         create_payment_request = cls(
             amount=amount,
@@ -175,6 +192,7 @@ class CreatePaymentRequest:
             description=description,
             metadata=metadata,
             webhook_url=webhook_url,
+            redirect_url=redirect_url,
         )
 
         create_payment_request.additional_properties = d
