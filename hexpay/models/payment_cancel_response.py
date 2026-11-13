@@ -16,7 +16,8 @@ T = TypeVar("T", bound="PaymentCancelResponse")
 
 @_attrs_define
 class PaymentCancelResponse:
-    """
+    """Result of a cancellation. Contains only the new status, always `cancelled`.
+
     Attributes:
         status (PaymentStatus): Lifecycle status of a payment:
             - `created`   — Payment created; customer has not yet selected a payment method.
@@ -27,7 +28,7 @@ class PaymentCancelResponse:
             - `expired`   — Payment TTL elapsed without a confirmed transfer. Reachable from
               **both** `created` (customer never selected a method) and `pending` (customer
               selected but did not send the transfer in time).
-            - `cancelled` — Canceled by the merchant via `POST /v1/payments/{id}/cancel`.
+            - `cancelled` — Canceled by the merchant via `POST /v1/payments/{paymentId}/cancel`.
               Reachable from both `created` and `pending`.
              Example: created.
     """

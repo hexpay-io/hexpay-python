@@ -8,41 +8,45 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from ..models.method_filter_chain import MethodFilterChain
-from ..models.method_filter_coin import MethodFilterCoin
+from dateutil.parser import isoparse
+from typing import cast
+import datetime
+
+if TYPE_CHECKING:
+    from ..models.webhook_payload import WebhookPayload
 
 
-T = TypeVar("T", bound="MethodFilter")
+T = TypeVar("T", bound="WebhookRequest")
 
 
 @_attrs_define
-class MethodFilter:
-    """A method filter specifying exactly which coin and chain to use for payment.
-    Both `coin` and `chain` are required.
-
-    Use the exact `symbol` values returned by `GET /v1/payment-methods`.
-    Values are case-sensitive.
+class WebhookRequest:
+    """Body of the webhook HexPay POSTs to `webhookUrl` when a payment reaches
+    `completed`. Signed with Ed25519; the signature is in the `X-Signature`
+    header and the key ID in `X-Signature-Kid`.
 
         Attributes:
-            coin (MethodFilterCoin): Coin ticker to match. Must be a coin supported by HexPay on TON. Example: USDT.
-            chain (MethodFilterChain): Chain ticker to match. Currently only `TON` is supported. Example: TON.
+            payload (WebhookPayload):
+            sign_at (datetime.datetime): Signing timestamp (RFC 3339, UTC). Example: 2026-01-20T10:12:00Z.
     """
 
-    coin: MethodFilterCoin
-    chain: MethodFilterChain
+    payload: WebhookPayload
+    sign_at: datetime.datetime
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        coin = self.coin.value
+        from ..models.webhook_payload import WebhookPayload
 
-        chain = self.chain.value
+        payload = self.payload.to_dict()
+
+        sign_at = self.sign_at.isoformat()
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "coin": coin,
-                "chain": chain,
+                "payload": payload,
+                "signAt": sign_at,
             }
         )
 
@@ -50,18 +54,20 @@ class MethodFilter:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.webhook_payload import WebhookPayload
+
         d = dict(src_dict)
-        coin = MethodFilterCoin(d.pop("coin"))
+        payload = WebhookPayload.from_dict(d.pop("payload"))
 
-        chain = MethodFilterChain(d.pop("chain"))
+        sign_at = isoparse(d.pop("signAt"))
 
-        method_filter = cls(
-            coin=coin,
-            chain=chain,
+        webhook_request = cls(
+            payload=payload,
+            sign_at=sign_at,
         )
 
-        method_filter.additional_properties = d
-        return method_filter
+        webhook_request.additional_properties = d
+        return webhook_request
 
     @property
     def additional_keys(self) -> list[str]:

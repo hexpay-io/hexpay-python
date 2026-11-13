@@ -17,7 +17,7 @@ T = TypeVar("T", bound="PaymentStatusResponse")
 @_attrs_define
 class PaymentStatusResponse:
     """Lightweight response containing only the current status of a payment.
-    Use `GET /v1/payments/{paymentID}` when you also need the address,
+    Use `GET /v1/payments/{paymentId}` when you also need the address,
     amount, or timer details.
 
         Attributes:
@@ -30,7 +30,7 @@ class PaymentStatusResponse:
                 - `expired`   — Payment TTL elapsed without a confirmed transfer. Reachable from
                   **both** `created` (customer never selected a method) and `pending` (customer
                   selected but did not send the transfer in time).
-                - `cancelled` — Canceled by the merchant via `POST /v1/payments/{id}/cancel`.
+                - `cancelled` — Canceled by the merchant via `POST /v1/payments/{paymentId}/cancel`.
                   Reachable from both `created` and `pending`.
                  Example: created.
     """

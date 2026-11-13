@@ -21,8 +21,11 @@ T = TypeVar("T", bound="PaymentDetails")
 
 @_attrs_define
 class PaymentDetails:
-    """Cryptocurrency payment instructions. Populated when the payment transitions
-    from `created` to `pending`.
+    """Cryptocurrency payment instructions. Absent while status is `created`.
+    Populated when the payment transitions to `pending` — either because the
+    customer selected a method, or because a single exact method was
+    preselected at creation. Kept for `completed`, and for `expired` and
+    `cancelled` payments that had reached `pending`.
 
     The customer must send exactly `coinAmount` of `coin` to `address` on the
     TON blockchain.
@@ -32,7 +35,7 @@ class PaymentDetails:
                 UQBf_DO8wsBddOcMnGEOyREEHPPKMBL2F26GQFOV7FQdYY_a.
             coin_amount (str): Exact cryptocurrency amount the customer must transfer. Sending less
                 than this amount will result in an underpayment.
-                 Example: 35.782.
+                 Example: 100.04.
             coin (CoinResponse): Cryptocurrency (coin) metadata.
             chain (ChainResponse): Blockchain network metadata. Currently only TON is supported.
             transaction_signatures (list[str] | Unset): On-chain transaction hash(es) confirming the payment.

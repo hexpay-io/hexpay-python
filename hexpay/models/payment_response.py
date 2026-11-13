@@ -37,7 +37,7 @@ class PaymentResponse:
             - `expired`   — Payment TTL elapsed without a confirmed transfer. Reachable from
               **both** `created` (customer never selected a method) and `pending` (customer
               selected but did not send the transfer in time).
-            - `cancelled` — Canceled by the merchant via `POST /v1/payments/{id}/cancel`.
+            - `cancelled` — Canceled by the merchant via `POST /v1/payments/{paymentId}/cancel`.
               Reachable from both `created` and `pending`.
              Example: created.
         amount (str): The denomination amount recorded at creation time. Mirrors the `amount`
@@ -50,18 +50,19 @@ class PaymentResponse:
             customer to this URL to let them complete the payment.
              Example: https://payment.hexpay.io/019327c6-2058-7901-b234-56789abcdeff.
         timer (PaymentTimerResponse): Lifecycle timing information for the payment.
-        payment_details (PaymentDetails | Unset): Cryptocurrency payment instructions. Populated when the payment
-            transitions
-            from `created` to `pending`.
+        payment_details (PaymentDetails | Unset): Cryptocurrency payment instructions. Absent while status is `created`.
+            Populated when the payment transitions to `pending` — either because the
+            customer selected a method, or because a single exact method was
+            preselected at creation. Kept for `completed`, and for `expired` and
+            `cancelled` payments that had reached `pending`.
 
             The customer must send exactly `coinAmount` of `coin` to `address` on the
             TON blockchain.
         order_id (str | Unset): Merchant-defined external order identifier, if provided at creation. Example:
             order-2026-00123.
-        description (str | Unset): Payment description Example: Premium subscription — 1 year.
-        metadata (PaymentResponseMetadata | Unset): Arbitrary key-value pairs provided at creation time, if any.
-            Included in payment objects and completed-payment webhook payloads.
-             Example: {'customer_id': 'cust_abc123', 'plan': 'premium'}.
+        description (str | Unset): Payment description, if provided at creation. Example: Premium subscription — 1 year.
+        metadata (PaymentResponseMetadata | Unset): Key-value pairs provided at creation time, if any.
+             Example: {'customer_id': 'cust_abc123'}.
     """
 
     id: UUID
@@ -113,14 +114,14 @@ class PaymentResponse:
                 "status": status,
                 "amount": amount,
                 "currency": currency,
-                "checkoutURL": checkout_url,
+                "checkoutUrl": checkout_url,
                 "timer": timer,
             }
         )
         if payment_details is not UNSET:
             field_dict["paymentDetails"] = payment_details
         if order_id is not UNSET:
-            field_dict["order_id"] = order_id
+            field_dict["orderId"] = order_id
         if description is not UNSET:
             field_dict["description"] = description
         if metadata is not UNSET:
@@ -143,7 +144,7 @@ class PaymentResponse:
 
         currency = d.pop("currency")
 
-        checkout_url = d.pop("checkoutURL")
+        checkout_url = d.pop("checkoutUrl")
 
         timer = PaymentTimerResponse.from_dict(d.pop("timer"))
 
@@ -154,7 +155,7 @@ class PaymentResponse:
         else:
             payment_details = PaymentDetails.from_dict(_payment_details)
 
-        order_id = d.pop("order_id", UNSET)
+        order_id = d.pop("orderId", UNSET)
 
         description = d.pop("description", UNSET)
 

@@ -26,8 +26,9 @@ class PaymentTimerResponse:
             2026-01-20T10:00:00Z.
         expires_at (datetime.datetime): Timestamp (RFC 3339, UTC) at which the payment automatically moves to
             `expired` status. Subtract `createdAt` to derive the total TTL window.
-             Example: 2026-01-20T10:15:00Z.
-        paid_at (datetime.datetime | Unset): Timestamp (RFC 3339, UTC) at which the payment has been paid
+             Example: 2026-01-20T11:00:00Z.
+        paid_at (datetime.datetime | Unset): Timestamp (RFC 3339, UTC) at which the payment has been paid.
+            Present only when status is `completed`.
              Example: 2026-01-20T10:12:00Z.
     """
 

@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class MethodFilterChain(str, Enum):
+class MethodRestrictionChain(str, Enum):
     TON = "TON"
 
     def __str__(self) -> str:

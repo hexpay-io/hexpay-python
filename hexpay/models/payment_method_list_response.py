@@ -19,9 +19,9 @@ T = TypeVar("T", bound="PaymentMethodListResponse")
 
 @_attrs_define
 class PaymentMethodListResponse:
-    """List of all payment methods currently enabled for the store, wrapped in a
-    consistent data envelope. Use `coin.symbol` and `chain.symbol` from each entry
-    as filter inputs in `payment_options.methods` when creating payments.
+    """Payment methods currently enabled for your store, wrapped in a consistent
+    data envelope. Use `coin.symbol` and `chain.symbol` from each entry in
+    `paymentOptions.methods` when creating payments.
 
         Attributes:
             data (list[PaymentMethodResponse]): Array of enabled payment method objects.

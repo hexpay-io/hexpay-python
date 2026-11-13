@@ -26,14 +26,14 @@ class Error:
             type_ (ErrorType): High-level error category. Use this to determine the general class of
                 the error without parsing `code`.
                  Example: invalid_request_error.
-            message (str): Human-readable description of the error, intended for developers. Example: Amount must be a
-                positive decimal number.
+            message (str): Human-readable description of the error, intended for developers. Example: Invalid amount (must
+                be a valid positive number).
             code (str): Machine-readable error identifier. Use this in conditional logic to branch
-                on specific error conditions (e.g., retry on `rate_limit_exceeded`,
+                on specific error conditions (e.g., retry on `payment_concurrent_limit_exceeded`,
                 surface to user on `payment_not_cancellable`).
                  Example: invalid_amount.
             param (str | Unset): The name of the request field that caused the error, using dot notation
-                for nested fields (e.g., `currency`, `payment_options.methods[0]`).
+                for nested fields (e.g., `currency`, `paymentOptions.methods`).
                 Present only when the error is attributable to a specific parameter.
                  Example: amount.
     """

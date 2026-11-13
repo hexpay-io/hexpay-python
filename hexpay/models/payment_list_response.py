@@ -23,24 +23,24 @@ class PaymentListResponse:
     """Paginated list of payments with cursor-based navigation metadata.
 
     Attributes:
-        payments (list[PaymentResponse]): Array of payment objects for the current page.
+        data (list[PaymentResponse]): Array of payment objects for the current page.
         cursor (str | Unset): Opaque pagination cursor. Present only when there are more pages of results.
-            Pass this value as the `cursor` query parameter to retrieve the next page.
-            When absent, the current page is the last one.
-             Example: eyJpZCI6IjAxOTMyN2M2LTIwNTgtNzkwMS1iMjM0LTU2Nzg5YWJjZGVmZiJ9.
+            Pass this value unchanged as the `cursor` query parameter to retrieve the
+            next page. When absent, the current page is the last one.
+             Example: 019327c6-1234-7901-b234-56789abcde00.
     """
 
-    payments: list[PaymentResponse]
+    data: list[PaymentResponse]
     cursor: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         from ..models.payment_response import PaymentResponse
 
-        payments = []
-        for payments_item_data in self.payments:
-            payments_item = payments_item_data.to_dict()
-            payments.append(payments_item)
+        data = []
+        for data_item_data in self.data:
+            data_item = data_item_data.to_dict()
+            data.append(data_item)
 
         cursor = self.cursor
 
@@ -48,7 +48,7 @@ class PaymentListResponse:
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "payments": payments,
+                "data": data,
             }
         )
         if cursor is not UNSET:
@@ -61,17 +61,17 @@ class PaymentListResponse:
         from ..models.payment_response import PaymentResponse
 
         d = dict(src_dict)
-        payments = []
-        _payments = d.pop("payments")
-        for payments_item_data in _payments:
-            payments_item = PaymentResponse.from_dict(payments_item_data)
+        data = []
+        _data = d.pop("data")
+        for data_item_data in _data:
+            data_item = PaymentResponse.from_dict(data_item_data)
 
-            payments.append(payments_item)
+            data.append(data_item)
 
         cursor = d.pop("cursor", UNSET)
 
         payment_list_response = cls(
-            payments=payments,
+            data=data,
             cursor=cursor,
         )
 

@@ -14,11 +14,10 @@ T = TypeVar("T", bound="PaymentResponseMetadata")
 
 @_attrs_define
 class PaymentResponseMetadata:
-    """Arbitrary key-value pairs provided at creation time, if any.
-    Included in payment objects and completed-payment webhook payloads.
+    """Key-value pairs provided at creation time, if any.
 
-        Example:
-            {'customer_id': 'cust_abc123', 'plan': 'premium'}
+    Example:
+        {'customer_id': 'cust_abc123'}
 
     """
 

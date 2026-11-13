@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class MethodFilterCoin(str, Enum):
+class MethodRestrictionCoin(str, Enum):
     BLUM = "BLUM"
     BUILD = "BUILD"
     DOGS = "DOGS"
