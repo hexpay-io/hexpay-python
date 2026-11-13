@@ -44,7 +44,7 @@ def main() -> None:
             cursor=cursor,
             status=statuses,
         )
-        for p in page.payments:
+        for p in page.data:
             total += 1
             print(f"{p.id}  {p.status:<10}  {p.amount} {p.currency}  order={p.order_id or '-'}")
 
