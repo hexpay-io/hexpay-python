@@ -17,9 +17,9 @@ from hexpay import AuthenticatedClient
 from hexpay.api.payments import create_payment
 from hexpay.models import (
     CreatePaymentRequest,
-    MethodFilter,
-    MethodFilterChain,
-    MethodFilterCoin,
+    MethodRestriction,
+    MethodRestrictionChain,
+    MethodRestrictionCoin,
     PaymentOptions,
 )
 
@@ -40,9 +40,9 @@ def main() -> None:
         currency="USD",
         payment_options=PaymentOptions(
             methods=[
-                MethodFilter(
-                    coin=MethodFilterCoin.USDT,
-                    chain=MethodFilterChain.TON,
+                MethodRestriction(
+                    coin=MethodRestrictionCoin.USDT,
+                    chain=MethodRestrictionChain.TON,
                 ),
             ],
         ),

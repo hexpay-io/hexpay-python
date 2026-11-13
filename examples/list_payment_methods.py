@@ -1,7 +1,7 @@
 """List the coin/chain combinations enabled for the merchant store.
 
 Use the printed `coin.symbol` / `chain.symbol` values when building a
-`MethodFilter` for Preselected payments.
+`MethodRestriction` for Preselected payments.
 
 Usage:
     export HEXPAY_TOKEN="<your-merchant-jwt>"
